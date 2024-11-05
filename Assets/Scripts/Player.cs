@@ -8,26 +8,26 @@ using UnityEngine;
 //턴 시작 -> 주사위 굴리기 -> 주사위 나온 숫자만큼 이동 -> 보드 상호작용 -> 턴 종료
 public class Player : MonoBehaviour
 {
+    [SerializeField]
     Player _player;
-    Dice _dices;
+    [SerializeField]
+    Dice _dice = new Dice();
+    [SerializeField]
     Board _board;
-    int[] _dice = { 1, 2, 3, 4, 5};
+    
 
     Define.State _state = Define.State.Idle;
 
     [SerializeField]
     public bool _myTurn = false;
+
     Vector3 _desPos;
-    int result;
-
-    [SerializeField]
-    int position = 0;
-
     
 
     [SerializeField]
-    GameObject[] _boardTile;
-    GameObject go = null;
+    int position = 0;
+ 
+    
 
     public Define.State State 
     { 
@@ -52,34 +52,37 @@ public class Player : MonoBehaviour
     {
         Init();
         _myTurn = true;
+        
+        Managers mg = Managers.Instance; // 매니저 생성 일단은..
     }
     
     void Update()
     {
+        if (this._myTurn == false)
+            return;
 
-    }
+        if (Input.GetKeyDown(KeyCode.Space)) // 스페이스 키를 눌렀을 때
+        {
+            int rolledNumber = _dice.OnDiceRoll();
 
-    //주사위 굴리기
-    public int OnDiceRoll()
-    {
-
-        result = Random.Range(0, _dice.Length);
-        Debug.Log("주사위 값 : "+ _dice[result]);
-
-        return _dice[result];
-        
+            StartCoroutine(this.OnMoving(rolledNumber));
+        }
     }
 
     public IEnumerator OnMoving(int result)
     {
         _myTurn = false;
-        int ct = _boardTile.Length;
+        
+        int ct = _board._boardTile.Length;
+        
 
         //결과 값에 따라 한 칸씩 전진
         for (int i = 0; i < result; i++) 
         {
-            
-            _desPos = _boardTile[(i + 1 + position) % ct].transform.position + new Vector3(0.0f, 0.1f, 0.0f);
+            //if (_board._boardTile[(i + 1 + position) % ct] == null) //보드타일이 중간에 사라졌을 때 스킵하고 다음 칸으로 전진                                                                   
+                //to do
+          
+            _desPos = _board._boardTile[(i + 1 + position) % ct].transform.position + new Vector3(0.0f, 0.1f, 0.0f);
             Vector3 dir = _desPos - transform.position;
 
             while(dir.magnitude > 0.01f)
@@ -92,7 +95,7 @@ public class Player : MonoBehaviour
             }
 
 
-            Debug.Log($"현재 칸 : {_boardTile[(i + 1 + position) % ct]}");
+            Debug.Log($"현재 칸 : {_board._boardTile[(i + 1 + position) % ct]}");
             
 
         }
@@ -107,14 +110,12 @@ public class Player : MonoBehaviour
     public void Init()
     {
         //int i = 0;
-        _boardTile = new GameObject[4];
-        go = GameObject.Find($"StartTile");
-        _boardTile[0] = go;
-        go = GameObject.Find("RedTile");
-        _boardTile[1] = go;
-        go = GameObject.Find("BlueTile");
-        _boardTile[2] = go;
-        go = GameObject.Find("GreenTile");
-        _boardTile[3] = go;
+        _player = this;
+        GameObject go = GameObject.Find("Board");
+        _board = go.GetComponent<Board>();
+
+        //시작위치 조정
+        //Vector3 startPoint = _board._boardTile[0].transform.position;
+        //transform.position = startPoint;
     }
 }

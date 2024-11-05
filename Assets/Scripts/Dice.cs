@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class Dice : MonoBehaviour
+public class Dice
 {
     int[] _dice = { 1, 2, 3, 4, 5 };
+    int result;
 
     void Start()
     {
@@ -14,4 +15,16 @@ public class Dice : MonoBehaviour
     {
         
     }
+
+    //주사위 굴리기
+    public int OnDiceRoll()
+    {
+
+        result = Random.Range(0, _dice.Length);
+        Debug.Log("주사위 값 : " + _dice[result]);
+
+        return _dice[result];
+
+    }
+
 }
