@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    int _boards = 10;
-    GameObject go;
-
+    //int _boards = 10;
+    //GameObject go = null;
     [SerializeField]
-    GameObject[] _tiles;
+    public GameObject[] _boardTile;
 
     
 
@@ -28,8 +27,19 @@ public class Board : MonoBehaviour
 
     public void Init()
     {
-        _tiles = new GameObject[_boards];
-        _tiles = GameObject.FindGameObjectsWithTag("Tile");
-        
+        //_tiles = new GameObject[_boards];
+        //_tiles = GameObject.FindGameObjectsWithTag("Tile");
+        //if (gameObject.GetComponentInChildren<Board>() == null)
+        //_board.transform.GetChild(0);
+
+        int childs = transform.childCount;
+        _boardTile = new GameObject[childs];
+
+        //보드에 타일적용(자식 순서대로)
+        for(int i = 0; i < childs; i++)
+            _boardTile[i] = transform.GetChild(i).gameObject;
+
+        //Debug.Log(_boardTile[0].transform.position);
+        //Debug.Log(_boardTile[1].transform.position);
     }
 }
