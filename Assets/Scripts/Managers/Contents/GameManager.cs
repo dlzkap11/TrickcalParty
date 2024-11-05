@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Player player;
-    private Dice dice;
+    public Player _player;
+    private Dice _dice;
     private void Start()
     {
 
@@ -11,12 +11,12 @@ public class GameManager : MonoBehaviour
 
     public void RollAndMove()
     {
-        if (player._myTurn == false)
+        if (_player._myTurn == false)
             return;
 
-        int rolledNumber = player.OnDiceRoll();
-        Debug.Log("주사위 결과: " + rolledNumber);
-        StartCoroutine(player.OnMoving(rolledNumber));
+        int rolledNumber = _player.OnDiceRoll();
+        
+        StartCoroutine(_player.OnMoving(rolledNumber));
 
     }
 

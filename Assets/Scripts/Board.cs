@@ -7,7 +7,11 @@ public class Board : MonoBehaviour
 {
     int _boards = 10;
     GameObject go;
+
+    [SerializeField]
     GameObject[] _tiles;
+
+    
 
     // 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10 -> 1 -> 2...
 
