@@ -9,8 +9,10 @@ public class Managers : MonoBehaviour
 
     #region Contents
     GameManager _game = new GameManager();
+    TileManager _tile = new TileManager();
 
     public static GameManager Game { get { return Instance._game; } }
+    public static TileManager Tile { get { return Instance._tile; } }
     #endregion
 
     #region core
@@ -51,10 +53,13 @@ public class Managers : MonoBehaviour
 
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
+
+            s_instance._tile.Init();
+            s_instance._pool.Init();
+            s_instance._sound.Init();
         }
 
-        s_instance._pool.Init();
-        s_instance._sound.Init();
+        
     }
 
     public static void Clear()

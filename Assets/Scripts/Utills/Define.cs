@@ -12,11 +12,11 @@ public class Define
 
     public enum Tiles
     {
+        Unknown,
         GreenTile,
         RedTile,
         BlueTile,
         StratTile,
-
     }
 
     public enum State
@@ -53,5 +53,10 @@ public class Define
         BGM,
         Effact,
         MaxCount,
+    }
+
+    public enum CameraMode
+    {
+        QuarterView,
     }
 }
