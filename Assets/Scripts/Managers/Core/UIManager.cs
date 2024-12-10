@@ -83,6 +83,25 @@ public class UIManager
         return popup;
     }
 
+    public T ShowPopupUI<T>(Transform parent = null, string name = null) where T : UI_Popup
+    {
+        if (string.IsNullOrEmpty(name))
+            name = typeof(T).Name;
+
+        GameObject go = Managers.Resource.Instantiate($"UI/Popup/{name}");
+
+        if (parent != null)
+            go.transform.SetParent(parent);
+
+        T popup = Utill.GetOrAddComponent<T>(go);
+
+        _popupStack.Push(popup);
+
+        
+
+        return popup;
+    }
+
     public T ShowSceneUI<T>(string name = null) where T : UI_Scene
     {
         if (string.IsNullOrEmpty(name))

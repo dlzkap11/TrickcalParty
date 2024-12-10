@@ -2,19 +2,9 @@ using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-    int[] _dice = { 1, 2, 3, 4, 5 };
+    [SerializeField]
+    int[] _dice = { 2, 2, 3, 4, 5, 6 };
     int result;
-
-    void Start()
-    {
-        
-    }
-
-    
-    void Update()
-    {
-        
-    }
 
     //주사위 굴리기
     public int OnDiceRoll()
